@@ -41,11 +41,25 @@ const App = () => {
 
   /* Main Functions */
   function addToBurger(event) {
-    console.log(event.target.key)
+    let targetIndex = event.target.name /* Looked up button attributes, this is the index of clicked ingredient */
+    console.log(`Adding: #${targetIndex}`)
+    let updatedStack = [... stack, availableIngredients[targetIndex]]
+    setStack(updatedStack)
   }
   
   function removeFromBurger(event) {
-    console.log(event.target)
+    let targetIndex = event.target.name /* Looked up button attributes, this is the index of clicked ingredient */
+    console.log(`Removing: #${targetIndex}`)
+    let targetIngredient = stack[targetIndex].name
+    console.log(`Removing: #${targetIngredient}`)
+    /* let updatedStack = stack.splice(targetIngredient, 1) */ /* This was catastrophic, it removed everything EXCEPT for the thing I clicked on! */
+    /* Quick googling helped me find a solution, this returns new array */
+    /* https://www.tutorialspoint.com/how-to-splice-an-array-without-mutating-the-original-array */
+    /* let updatedStack = [...stack].splice(targetIngredient, 1)  */
+    /* ... but it did not work until I seperated it */
+    let updatedStack = [...stack]
+    updatedStack.splice(targetIndex, 1)
+    setStack(updatedStack)
   }
   /* Helper Functions */
   
